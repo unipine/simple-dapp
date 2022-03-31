@@ -2,7 +2,7 @@
 
 ### Write tests
 
-[Test](https://github.com/unipine/solidity-challenge/test/ethpoo.test.ts) 
+[Test](https://github.com/unipine/solidity-challenge/blob/main/test/ethpool.test.ts) 
 
 ### Deploy your contract
 
