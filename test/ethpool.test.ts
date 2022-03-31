@@ -10,7 +10,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 const { getContractFactory, getSigners } = ethers
 
 describe('Pool', async () => {
-  let pool, poolV2
+  let pool
   let signers: SignerWithAddress[]
 
   before(async () => {
@@ -23,7 +23,7 @@ describe('Pool', async () => {
 
     expect(await pool.name()).to.eq("ETHPool")
     expect(await pool.version()).to.eq("1.0.0")
-    // expect(upgrades.deployProxy(poolFactory, { initializer: 'initialize' })).to.be.revertedWith("already initialized")
+    expect(upgrades.deployProxy(poolFactory, { initializer: 'initialize' })).to.be.revertedWith("already initialized")
   })
 
   it('Deposit: First User', async () => {
@@ -33,7 +33,7 @@ describe('Pool', async () => {
     expect(receipt.events[0].event).to.eq("Deposit")
     expect(receipt.events[0].args.user).to.eq(signers[2].address)
     expect(receipt.events[0].args.amount).to.eq(getBigNumber(1))
-    console.log(await ethers.provider.getBalance(pool.address))
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(1))
   })
 
   it('Deposit: Second User', async () => {
@@ -43,12 +43,12 @@ describe('Pool', async () => {
     expect(receipt.events[0].event).to.eq("Deposit")
     expect(receipt.events[0].args.user).to.eq(signers[3].address)
     expect(receipt.events[0].args.amount).to.eq(getBigNumber(2))
-    console.log(await ethers.provider.getBalance(pool.address))
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(3))
   })
 
   it('Deposit: Owner', async () => {
     expect(pool.connect(signers[1]).deposit({ value: ethers.utils.parseEther("0.005") })).to.be.revertedWith("not user")
-    console.log(await ethers.provider.getBalance(pool.address))
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(3))
   })
 
   it('Deposit History', async () => {
@@ -66,11 +66,12 @@ describe('Pool', async () => {
 
     expect(receipt.events[0].event).to.eq("Reward")
     expect(receipt.events[0].args.amount).to.eq(getBigNumber(3))
-    console.log(await ethers.provider.getBalance(pool.address))
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(6))
   })
 
   it('Rewards - User', async () => {
     expect(pool.connect(signers[2]).reward({ value: ethers.utils.parseEther("0.005") })).to.be.revertedWith("not owner")
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(6))
   })
 
   it('Withdraw: First User', async () => {
@@ -78,8 +79,8 @@ describe('Pool', async () => {
       .to.emit(pool, "Withdraw")
       .withArgs(signers[2].address, getBigNumber(1).toString(), getBigNumber(2).toString())
 
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(4))
     expect(pool.connect(signers[2]).withdraw()).to.be.revertedWith("nothing deposited")
-    console.log(await ethers.provider.getBalance(pool.address))
   })
 
   it('Withdraw: Second User', async () => {
@@ -87,8 +88,8 @@ describe('Pool', async () => {
       .to.emit(pool, "Withdraw")
       .withArgs(signers[3].address, getBigNumber(2).toString(), getBigNumber(4).toString())
 
+    expect(await ethers.provider.getBalance(pool.address)).to.eq(getBigNumber(0))
     expect(pool.connect(signers[3]).withdraw()).to.be.revertedWith("nothing deposited")
-    console.log(await ethers.provider.getBalance(pool.address))
   })
 
   it('Withdraw: Owner', async () => {
