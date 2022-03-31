@@ -10,7 +10,7 @@ export function History({ history }) {
           <li key={`history-log-${ind}`}>
             {`
               ${log.user}
-              : ${new Date(parseInt(log.time.toString()))}
+              : ${log.time.toString()}
               : ${parseFloat(ethers.utils.formatEther(log.amount.toString())).toFixed(3)} ETH
               : ${log.getReward ? "rewarded" : "not yet"}
             `}

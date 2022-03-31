@@ -191,7 +191,7 @@ export class Dapp extends React.Component {
       },
       rewardData: {
         amount: parseFloat(ethers.utils.formatEther(rewardData.amount)).toFixed(3),
-        time: rewardTime ? new Date(parseInt(rewardData.time.toString())) : "0000-00-00"
+        time: rewardTime ? rewardData.time.toString() : ""
       }
     });
   }

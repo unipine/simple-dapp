@@ -2,13 +2,14 @@
 
 ### Write tests
 
-./test/ethpool.test.ts
+[Test](https://github.com/unipine/solidity-challenge/test/ethpoo.test.ts) 
 
 ### Deploy your contract
 
 - Network: rinkeby
-- Block: 10417241
-- Contract: 0x92f1cc68f20b9ee2a71ce43da3011f4f95ab5efc
-- Owner: 0x1b08177d683d344f571504b2e83afb558f202ef7
+- Block: [10422899](https://rinkeby.etherscan.io/block/10422899)
+- Contract: [0x87d8025B7FC5FcfD02a1C5dd662f45dF8eA2a96a](https://rinkeby.etherscan.io/address/0x87d8025B7FC5FcfD02a1C5dd662f45dF8eA2a96a)
+- Owner: [0x48088a62D49fdc79a05D9354688AaD0D28543dc6](https://rinkeby.etherscan.io/address/0x48088a62D49fdc79a05D9354688AaD0D28543dc6)
 
 ### Interact with the contract
+
