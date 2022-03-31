@@ -13,3 +13,6 @@
 
 ### Interact with the contract
 
+![Admin](https://github.com/unipine/solidity-challenge/blob/main/imgs/ScreenShot_20220331225344.png)
+![User1](https://github.com/unipine/solidity-challenge/blob/main/imgs/ScreenShot_20220331225223.png)
+![User2](https://github.com/unipine/solidity-challenge/blob/main/imgs/ScreenShot_20220331225308.png)
